@@ -45,8 +45,10 @@
         8: 'rgb(201, 119, 25)'
       }
 
+      var first_choice = true
+
       var mines = 100
-      var mines_indexes = []
+      var mines_indexes = Array()
 
       var flagged_boxes = Array()
       var game_done = false
@@ -166,6 +168,28 @@
       
 
       function revealRequest(index) {
+        if (first_choice) {
+          FIndexNeighbors = Array()
+          let [row, column] = index2rc(index, width)
+          for(let r = row - 1; r <= row + 1; r++) {
+            for(let c = column - 1; c <= column + 1; c++) {
+              if (r >= 0 && r < height && c >= 0 && c < width) {
+                FIndexNeighbors.push(c + r * width)
+              }
+            }
+          }
+
+          if (mines <= (width * height - 9)) {
+            indexes2randomize = [...Array(width * height).keys()].filter(el => !FIndexNeighbors.includes(el));
+          } else {
+            indexes2randomize = [...Array(width * height).keys()]
+          }
+
+          mines_indexes = getRandomSubarray(indexes2randomize, mines)
+
+          first_choice = false
+        }
+
         let neighborMines = getNeighborMines(Number(index), height, width)
 
         if (flagged_boxes.includes(index) || game_done) {
@@ -261,9 +285,9 @@
         
         gameBoard.innerHTML = tableMarkup
 
-        timer_paused = false
+        first_choice = true
 
-        mines_indexes = getRandomSubarray([...Array(width * height).keys()], mines)
+        timer_paused = false
 
         document.querySelectorAll(".no-menu").forEach(el => 
           el.addEventListener('contextmenu', e => {
