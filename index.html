@@ -65,14 +65,15 @@
       let board_height = screen.height - 30
       let board_width = screen.width
 
-      var height = Math.floor(board_height / 32)
-      var width = Math.floor(board_width / 32)      
+      cell_length = 32
+
+      var height = Math.floor(board_height / cell_length)
+      var width = Math.floor(board_width / cell_length)
       
       let unit_length = board_height / height
 
       gameBoard.style.height = `${board_height}px`
       gameBoard.style.width = `${width * unit_length}px`
-
 
       function getRandomSubarray(arr, size) {
         var shuffled = arr.slice(0), i = arr.length, temp, index;
@@ -260,6 +261,11 @@
       }
 
       function showNewGamePage() {
+        if (board_width < 800) {
+          startGame()
+          return false
+        }
+
         document.getElementById('newGamePage').style.visibility = 'visible'
       }
 
@@ -326,6 +332,9 @@
       heightValue.innerHTML = height
       width = widthSlider.value
       widthValue.innerHTML = width
+
+      if (board_width < 800) {width = 10}
+
       mines = Math.floor((minesSlider.value * (height * width)) / 100)
       minesValue.innerHTML = minesSlider.value + '%'
 
@@ -336,8 +345,8 @@
 
       function fullScreenMode(element) {
         if (element.checked) {
-          height = Math.floor(board_height / 32)
-          width = Math.floor(board_width / 32)
+          height = Math.floor(board_height / cell_length)
+          width = Math.floor(board_width / cell_length)
           heightSlider.value = height
           heightValue.innerHTML = height
           widthSlider.value = width
