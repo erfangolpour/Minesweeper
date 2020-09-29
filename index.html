@@ -319,6 +319,8 @@
           widthSlider.value = width
           widthValue.innerHTML = width
           gameBoard.style.width = `${width * (board_height / height)}px`
+
+          mines = Math.floor((minesSlider.value * (height * width)) / 100)
                     
           heightSlider.disabled = true
           widthSlider.disabled = true
@@ -331,12 +333,14 @@
       heightSlider.oninput = function() {
         height = this.value
         heightValue.innerHTML = this.value
+        mines = Math.floor((minesSlider.value * (height * width)) / 100)
       }
 
       widthSlider.oninput = function() {
         width = this.value
         widthValue.innerHTML = this.value
         gameBoard.style.width = `${width * (board_height / height)}px`
+        mines = Math.floor((minesSlider.value * (height * width)) / 100)
       }
 
       minesSlider.oninput = function() {
