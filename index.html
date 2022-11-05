@@ -62,8 +62,8 @@
       }, 1000);
 
 
-      let board_height = screen.height - 30
-      let board_width = screen.width
+      let board_height = window.innerHeight
+      let board_width = window.innerWidth
       
       if (board_width < 800) {board_height = screen.height - 200}
 
@@ -72,10 +72,10 @@
       var height = Math.floor(board_height / cell_length)
       var width = Math.floor(board_width / cell_length)
       
-      let unit_length = board_height / height
+      // let unit_length = board_height / height
 
       gameBoard.style.height = `${board_height}px`
-      gameBoard.style.width = `${width * unit_length}px`
+      gameBoard.style.width = `${board_width}px`
 
       function getRandomSubarray(arr, size) {
         var shuffled = arr.slice(0), i = arr.length, temp, index;
